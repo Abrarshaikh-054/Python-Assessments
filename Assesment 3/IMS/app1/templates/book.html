@@ -1,0 +1,125 @@
+{% extends "header.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center mb-4">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal">
+            ADD NEW BOOK
+        </button>
+    </div>
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="card card-table">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">TITLE</th>
+                    <th scope="col">AUTHOR</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">AVAILABLE COPIES</th>
+                    <th scope="col">UPDATE</th>
+                    <th scope="col">DELETE</th>
+                </tr>
+            </thead>
+            <tbody id="bookTable">
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.available_copies }}</td>
+                    <td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editBookModal{{book.pk}}">EDIT</button></td>
+                    <td><a href="{% url 'delbook' book.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this book?');">DELETE</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Add New Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookForm" action="{% url 'addbook' %}" method="post">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter book title" maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" class="form-control" name="author" placeholder="Enter author name" maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" class="form-control" name="isbn" placeholder="Enter ISBN" maxlength="13" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="available_copies">Available Copies</label>
+                        <input type="number" class="form-control" name="available_copies" placeholder="Enter number of available copies" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Add Book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Book Modal -->
+<div class="container mt-5">
+    {% for book in books %}
+    <div class="modal fade" id="editBookModal{{book.pk}}" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel{{book.pk}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBookModalLabel{{book.pk}}">Update Book</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editBookForm{{book.pk}}" action="{% url 'upbook' book.pk %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" value="{{ book.title }}" maxlength="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input type="text" class="form-control" name="author" value="{{ book.author }}" maxlength="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="isbn">ISBN</label>
+                            <input type="text" class="form-control" name="isbn" value="{{ book.isbn }}" maxlength="13" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="available_copies">Available Copies</label>
+                            <input type="number" class="form-control" name="available_copies" value="{{ book.available_copies }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Update Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
