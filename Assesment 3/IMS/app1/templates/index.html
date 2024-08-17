@@ -1,0 +1,84 @@
+{% extends "header.html" %}
+{% load static %}
+{% block content %}
+
+         <!-- Main Content -->
+         {% if messages %}
+         <div class="container">
+             {% for message in messages %}
+             <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                 {{ message }}
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             {% endfor %}
+         </div>
+         {% endif %}
+             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                 <h1 class="h2 font-weight-bold text-primary">Institute Management System</h1>
+                 <div class="btn-toolbar mb-2 mb-md-0">
+                     <div class="btn-group mr-2">
+                         <button type="button" class="btn btn-sm btn-outline-secondary shadow-sm">Action</button>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-sm-3">
+                     <div class="card text-white bg-info mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">{{student_count}}</h5>
+                             <p class="card-text">Students</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-sm-3">
+                     <div class="card text-white bg-info mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">{{teacher_count}}</h5>
+                             <p class="card-text">Teachers</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-sm-3">
+                     <div class="card text-white bg-info mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">{{club_count}}</h5>
+                             <p class="card-text">Clubs</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-sm-3">
+                     <div class="card text-white bg-info mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">{{book_count}}</h5>
+                             <p class="card-text">Books</p>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-sm-8">
+                     <div class="card mb-3 shadow-sm">
+                         <img src="https://via.placeholder.com/728x90.png?text=Event+Image" class="card-img-top" alt="Event">
+                         <div class="card-body">
+                             <h5 class="card-title">DPI Event 101</h5>
+                             <p class="card-text">Washington D.C. Marquee Park</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="card bg-light mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">No meeting scheduled</h5>
+                         </div>
+                     </div>
+                     <div class="card bg-light mb-3 shadow-sm">
+                         <div class="card-body">
+                             <h5 class="card-title">ToDo List</h5>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         
+{% endblock content %}
